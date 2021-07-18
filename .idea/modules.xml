@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/corrente_do_bem_backend.iml" filepath="$PROJECT_DIR$/corrente_do_bem_backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/corrente-do-bem-backend.iml" filepath="$PROJECT_DIR$/corrente-do-bem-backend.iml" />
     </modules>
   </component>
 </project>
