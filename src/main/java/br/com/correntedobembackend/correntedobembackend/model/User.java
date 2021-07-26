@@ -1,5 +1,6 @@
 package br.com.correntedobembackend.correntedobembackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -40,11 +41,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "hability_id"))
     private List<Hability> habilities;
-
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Subscription> subscriptions;
-
 
 
 }
