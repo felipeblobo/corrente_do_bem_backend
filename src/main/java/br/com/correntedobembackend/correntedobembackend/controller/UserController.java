@@ -4,6 +4,7 @@ import br.com.correntedobembackend.correntedobembackend.model.User;
 import br.com.correntedobembackend.correntedobembackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -67,4 +68,18 @@ public class UserController {
         repository.deleteById(id);
     }
 
+    @GetMapping("/passwordvalidation")
+    public ResponseEntity<Boolean> passwordValidation(@RequestParam String email, @RequestParam String password) {
+
+        Optional<User>optUser = repository.findByEmail(email);
+        if(optUser.isEmpty()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        User user = optUser.get();
+        boolean valid = encoder.matches(password, user.getPassword());
+
+        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status).body(valid);
+    }
 }
