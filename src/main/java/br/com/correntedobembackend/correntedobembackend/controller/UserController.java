@@ -61,7 +61,6 @@ public class UserController {
         repository.save(user);
     }
 
-
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = {"/{id}"})
     public void delete(@PathVariable Integer id) {

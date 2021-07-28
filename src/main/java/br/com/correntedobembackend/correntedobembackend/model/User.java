@@ -1,6 +1,7 @@
 package br.com.correntedobembackend.correntedobembackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class User {
     private String phone;
     @Column(unique = true)
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @OneToOne(fetch = FetchType.EAGER)
