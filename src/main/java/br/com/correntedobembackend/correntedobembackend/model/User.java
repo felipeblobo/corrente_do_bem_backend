@@ -20,7 +20,9 @@ public class User {
     private String cpf;
     private Date birth_date;
     private String phone;
+    @Column(unique = true)
     private String email;
+    private String password;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id")
