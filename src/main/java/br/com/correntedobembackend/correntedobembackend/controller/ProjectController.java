@@ -19,6 +19,7 @@ public class ProjectController {
     @Autowired
     ProjectRepository repository;
 
+
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Project> list() {
         ArrayList<Project> all =(ArrayList<Project>) repository.findAll();
