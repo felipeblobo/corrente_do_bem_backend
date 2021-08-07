@@ -43,6 +43,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                     new ArrayList<>()
                     )
             );
+
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar o usuário!", e);
         }
@@ -52,14 +53,18 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        UserDetailsData userData = (UserDetailsData)  authResult.getPrincipal();
+       UserDetailsData userData = (UserDetailsData)  authResult.getPrincipal();
 
         String token = JWT.create().
                 withSubject(userData.getUsername()).
                 withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION)).
                 sign(Algorithm.HMAC512(TOKEN_PASSWORD));
 
-                response.getWriter().write(token);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(
+                "{\"" + "token" + "\":\"" + token + "\"}"
+        );
                 response.getWriter().flush();
 
     }
