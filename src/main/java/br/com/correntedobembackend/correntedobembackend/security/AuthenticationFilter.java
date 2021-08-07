@@ -19,10 +19,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.TOKEN_EXPIRATION;
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.TOKEN_PASSWORD;
+
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public static final int TOKEN_EXPIRATION = 600_000;
-    public static final String TOKEN_PASSWORD = "b2180839-c619-43a7-b49b-7cb7cc5d2de1";
 
     private final AuthenticationManager authenticationManager;
 
