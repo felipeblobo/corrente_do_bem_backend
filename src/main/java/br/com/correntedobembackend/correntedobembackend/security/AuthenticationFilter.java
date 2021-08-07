@@ -19,10 +19,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.TOKEN_EXPIRATION;
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.TOKEN_PASSWORD;
+
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public static final int TOKEN_EXPIRATION = 600_000;
-    public static final String TOKEN_PASSWORD = "b2180839-c619-43a7-b49b-7cb7cc5d2de1";
 
     private final AuthenticationManager authenticationManager;
 
@@ -43,6 +44,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                     new ArrayList<>()
                     )
             );
+
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar o usuário!", e);
         }
@@ -52,14 +54,18 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        UserDetailsData userData = (UserDetailsData)  authResult.getPrincipal();
+       UserDetailsData userData = (UserDetailsData)  authResult.getPrincipal();
 
         String token = JWT.create().
                 withSubject(userData.getUsername()).
                 withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION)).
                 sign(Algorithm.HMAC512(TOKEN_PASSWORD));
 
-                response.getWriter().write(token);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(
+                "{\"" + "token" + "\":\"" + token + "\"}"
+        );
                 response.getWriter().flush();
 
     }

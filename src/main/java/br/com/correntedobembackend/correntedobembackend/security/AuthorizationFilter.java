@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AuthorizationFilter extends BasicAuthenticationFilter {
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.*;
 
-    public static final String HEADER_ATTRIBUTE = "Authorization";
-    public static final String ATTRIBUTE_PREFIX = "Bearer ";
+public class AuthorizationFilter extends BasicAuthenticationFilter {
 
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -50,7 +49,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
-        String user = JWT.require(Algorithm.HMAC512(AuthenticationFilter.TOKEN_PASSWORD))
+        String user = JWT.require(Algorithm.HMAC512(TOKEN_PASSWORD))
                 .build()
                 .verify(token)
                 .getSubject();
