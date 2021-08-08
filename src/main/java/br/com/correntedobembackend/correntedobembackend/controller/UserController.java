@@ -48,6 +48,17 @@ public class UserController {
         }
     }
 
+    @GetMapping(path = {"/email"})
+    public User getByEmail (@RequestParam String email) {
+        Optional<User> user = (Optional<User>)repository.findByEmail(email);
+
+        if(user.isPresent()){
+            return user.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping(path = {"/{id}"})
     public User update(@RequestBody User user, @PathVariable int id){
@@ -65,8 +76,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@RequestBody User user) {
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        if(repository.findByEmail(user.getEmail()).isPresent()){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is already in use");
+        }
 
+        user.setPassword(encoder.encode(user.getPassword()));
         repository.save(user);
     }
 
