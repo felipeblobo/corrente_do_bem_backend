@@ -3,6 +3,7 @@ package br.com.correntedobembackend.correntedobembackend.controller;
 import br.com.correntedobembackend.correntedobembackend.model.Institution;
 import br.com.correntedobembackend.correntedobembackend.model.Project;
 import br.com.correntedobembackend.correntedobembackend.model.Project;
+import br.com.correntedobembackend.correntedobembackend.repository.ProjectCustomRepository;
 import br.com.correntedobembackend.correntedobembackend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,12 +20,19 @@ public class ProjectController {
 
     @Autowired
     ProjectRepository repository;
+    @Autowired
+    ProjectCustomRepository customRepository;
+
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Project> list() {
-        ArrayList<Project> all =(ArrayList<Project>) repository.findAll();
-        return all;
+    public List<Project> findFiltered(
+            @RequestParam(value = "status", required = false) Integer status,
+            @RequestParam(value = "q", required = false) String q,
+            @RequestParam(value = "institution_id", required = false) Integer institution_id,
+            @RequestParam(value = "local_type", required = false) String local_type
+    ){
+        return customRepository.find(status, q,institution_id,local_type);
     }
 
     @GetMapping(path = {"/{id}"})
@@ -62,4 +71,6 @@ public class ProjectController {
     public void delete(@PathVariable Integer id) {
         repository.deleteById(id);
     }
+
+
 }

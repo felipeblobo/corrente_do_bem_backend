@@ -77,7 +77,7 @@ public class UserController {
     public void addUser(@RequestBody User user) {
 
         if(repository.findByEmail(user.getEmail()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is already in use");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is already being used.");
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
