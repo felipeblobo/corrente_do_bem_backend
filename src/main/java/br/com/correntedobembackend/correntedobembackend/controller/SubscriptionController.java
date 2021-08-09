@@ -4,6 +4,7 @@ package br.com.correntedobembackend.correntedobembackend.controller;
 import br.com.correntedobembackend.correntedobembackend.model.Project;
 import br.com.correntedobembackend.correntedobembackend.model.Subscription;
 import br.com.correntedobembackend.correntedobembackend.model.Subscription;
+import br.com.correntedobembackend.correntedobembackend.repository.SubscriptionCustomRepository;
 import br.com.correntedobembackend.correntedobembackend.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,11 +21,18 @@ public class SubscriptionController {
 
     @Autowired
     SubscriptionRepository repository;
+    @Autowired
+    SubscriptionCustomRepository customRepository;
+
 
     @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Subscription> list() {
-        ArrayList<Subscription> all =(ArrayList<Subscription>) repository.findAll();
-        return all;
+    public List<Subscription> findFiltered(
+            @RequestParam(value = "user_id", required = false) Integer user_id,
+            @RequestParam(value = "project_id", required = false) Integer project_id,
+            @RequestParam(value = "institution_id", required = false) Integer institution_id,
+            @RequestParam(value = "status", required = false) String status
+    ){
+        return customRepository.find(user_id, project_id,institution_id,status);
     }
 
     @GetMapping(path = {"/{id}"})
