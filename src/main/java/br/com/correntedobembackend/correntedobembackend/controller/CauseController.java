@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("cause")
+@RequestMapping("/cause")
 public class CauseController {
     @Autowired
     CauseRepository repository;
