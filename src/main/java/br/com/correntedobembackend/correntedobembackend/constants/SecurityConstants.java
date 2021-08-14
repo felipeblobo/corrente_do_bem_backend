@@ -32,5 +32,5 @@ public class SecurityConstants {
     };
     public static final String TOKEN_PASSWORD = "b2180839-c619-43a7-b49b-7cb7cc5d2de1";
     public static final String HEADER_NAME = "Authorization";
-    public static final int TOKEN_EXPIRATION =  1000 * 60 * 30;
+    public static final int TOKEN_EXPIRATION =  100000 * 60 * 30;
 }

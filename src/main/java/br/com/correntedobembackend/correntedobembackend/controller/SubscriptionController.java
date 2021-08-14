@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/subscription")
 public class SubscriptionController {
@@ -46,6 +47,7 @@ public class SubscriptionController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping(path = {"/{id}"})
     public Subscription update(@RequestBody Subscription subscription, @PathVariable int id){
