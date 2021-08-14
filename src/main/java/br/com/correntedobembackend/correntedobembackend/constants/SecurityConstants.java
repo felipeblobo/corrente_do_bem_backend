@@ -12,7 +12,22 @@ public class SecurityConstants {
             "/hability",
             "/hability/{\\d+}",
             "/institution",
-            "/institution/{\\d+}"
+            "/institution/{\\d+}",
+            "/swagger-ui/{\\d+}",
+            "/swagger-ui/",
+            "/swagger-ui",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/webjars/**"
+
+    };
+    public static final String[] AUTH_LIST = {
+            // -- swagger ui
+            "**/swagger-resources/**",
+            "/swagger-ui.html",
+            "/webjars/**",
 
     };
     public static final String TOKEN_PASSWORD = "b2180839-c619-43a7-b49b-7cb7cc5d2de1";
