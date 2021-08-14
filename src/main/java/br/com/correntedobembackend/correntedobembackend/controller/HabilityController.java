@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("hability")
+@RequestMapping("/hability")
 public class HabilityController {
 
     @Autowired

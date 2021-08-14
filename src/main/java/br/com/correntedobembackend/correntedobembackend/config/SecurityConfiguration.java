@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.NO_AUTH_LIST;
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.AUTH_LIST;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -44,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, NO_AUTH_LIST).permitAll()
-                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager()))

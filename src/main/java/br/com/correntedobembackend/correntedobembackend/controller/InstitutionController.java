@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("institution")
+@RequestMapping("/institution")
 public class InstitutionController {
 
     @Autowired

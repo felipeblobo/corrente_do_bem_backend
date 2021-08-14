@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("address")
+@RequestMapping("/address")
 public class AddressController {
     @Autowired
     AddressRepository repository;
