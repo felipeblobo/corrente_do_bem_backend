@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.NO_AUTH_LIST;
+import static br.com.correntedobembackend.correntedobembackend.constants.SecurityConstants.AUTH_LIST;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
