@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,6 @@ public class ProjectCustomRepository {
 
         if(local_type != null){
             query += condition + "P.local_type = :local_type";
-            condition = " and ";
         }
 
         var implementedQuery = em.createQuery(query, Project.class);
@@ -61,8 +61,6 @@ public class ProjectCustomRepository {
             implementedQuery.setParameter("local_type",local_type);
         }
 
-        return implementedQuery.getResultList()
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(implementedQuery.getResultList());
     }
 }

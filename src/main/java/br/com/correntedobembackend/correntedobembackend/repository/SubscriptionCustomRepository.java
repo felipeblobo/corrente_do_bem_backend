@@ -4,6 +4,7 @@ import br.com.correntedobembackend.correntedobembackend.model.Subscription;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,6 @@ public class SubscriptionCustomRepository {
 
         if(status != null){
             query += condition + "S.status = :status";
-            condition = " and ";
         }
 
         var implementedQuery = em.createQuery(query, Subscription.class);
@@ -60,8 +60,6 @@ public class SubscriptionCustomRepository {
             implementedQuery.setParameter("status", status);
         }
 
-        return implementedQuery.getResultList()
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(implementedQuery.getResultList());
     }
 }
