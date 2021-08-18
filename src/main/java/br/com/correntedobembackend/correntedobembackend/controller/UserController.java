@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.Map;
 
 import java.util.Optional;
@@ -31,11 +32,15 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<User> list() {
-        ArrayList<User> all =(ArrayList<User>) repository.findAll();
-        return all;
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public List<User> listUsers(){
+        return (List<User>) repository.findAll();
     }
+
+//    public ArrayList<User> list() {
+//        ArrayList<User> all =(ArrayList<User>) repository.findAll();
+//        return all;
+//    }
 
     @GetMapping(path = {"/{id}"})
     public User getById (@PathVariable Integer id) {
@@ -48,8 +53,19 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = {"/email"})
-    public User getByEmail (@RequestParam String email) {
+//    @GetMapping(path = {"/{email}"})
+//    public User getByEmail (@RequestParam String email) {
+//        Optional<User> user = (Optional<User>)repository.findByEmail(email);
+//
+//        if(user.isPresent()){
+//            return user.get();
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+//        }
+//    }
+
+        @RequestMapping(value = "byEmail/{email}", method = RequestMethod.GET)
+    public User getByEmail (@PathVariable("email") String email) {
         Optional<User> user = (Optional<User>)repository.findByEmail(email);
 
         if(user.isPresent()){
