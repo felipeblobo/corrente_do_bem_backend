@@ -98,7 +98,7 @@ public class UserController {
     public ResponseEntity<Boolean> passwordValidation(@RequestParam String email, @RequestParam String password) {
 
         Optional<User>optUser = repository.findByEmail(email);
-        if(optUser.isEmpty()){
+        if(!optUser.isPresent()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
 
