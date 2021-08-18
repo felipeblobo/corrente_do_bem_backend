@@ -22,4 +22,60 @@ public class Subscription {
 
     private Date date;
     private String status;
+
+    public Subscription() {
+
+    }
+
+    public Subscription(int id, int i, int i1, String s, String cancelada) {
+
+    }
+
+    public Subscription(int id, User user, Project project, Date date, String status) {
+        this.id = id;
+        this.user = user;
+        this.project = project;
+        this.date = date;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

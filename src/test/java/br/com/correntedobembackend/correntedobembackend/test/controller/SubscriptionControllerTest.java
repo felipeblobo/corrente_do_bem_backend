@@ -1,8 +1,8 @@
 package br.com.correntedobembackend.correntedobembackend.test.controller;
 
-import br.com.correntedobembackend.correntedobembackend.controller.ProjectController;
-import br.com.correntedobembackend.correntedobembackend.model.Project;
-import br.com.correntedobembackend.correntedobembackend.repository.ProjectRepository;
+import br.com.correntedobembackend.correntedobembackend.controller.SubscriptionController;
+import br.com.correntedobembackend.correntedobembackend.model.Subscription;
+import br.com.correntedobembackend.correntedobembackend.repository.SubscriptionRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -21,31 +21,28 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-//@WebMvcTest(ProjectController.class)
+//@WebMvcTest(SubscriptionController.class)
 @AutoConfigureMockMvc
 @WithMockUser(username = "joao@joao.com")
-@SpringBootTest(properties = "spring.main.lazy-initialization=true", classes = {ProjectController.class })
-public class ProjectControllerTest {
+@SpringBootTest(properties = "spring.main.lazy-initialization=true", classes = {SubscriptionController.class })
+public class SubscriptionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProjectRepository projectRepository;
+    private SubscriptionRepository subscriptionRepository;
 
     @MockBean
-    private ProjectController projectController;
+    private SubscriptionController subscriptionController;
 
     @Test
-    public void shouldReturnProjectFindById() throws Exception {
-        Optional<Project> project =
-                Optional.of(new Project(6, 2, "Dentista(o)",
-                        "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixid" +
-                                "=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2" +
-                                ".1&auto=format&fit=crop&w=1", "local", 6, "Estamos precisando de alguém com experiência em periodontia."));
-        Mockito.when(projectRepository.findById(1)).thenReturn(project);
+    public void shouldReturnSubscriptionFindById() throws Exception {
+        Optional<Subscription> subscription =
+                Optional.of(new Subscription(1, 1, 1, "2021-07-07", "Cancelada"));
+        Mockito.when(subscriptionRepository.findById(1)).thenReturn(subscription);
         this.mockMvc.perform(
-                get("/project/9").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+                get("/subscription/9").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         //                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         //                .andExpect(jsonPath("id").value(1))
         ;
