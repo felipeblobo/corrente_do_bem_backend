@@ -4,6 +4,7 @@ import br.com.correntedobembackend.correntedobembackend.model.Subscription;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class SubscriptionCustomRepository {
             query += condition + "S.status = :status";
         }
 
-        var implementedQuery = em.createQuery(query, Subscription.class);
+        TypedQuery<Subscription> implementedQuery = em.createQuery(query, Subscription.class);
 
         if(user_id != null){
             implementedQuery.setParameter("user_id", user_id);
