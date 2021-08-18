@@ -37,6 +37,8 @@ public class HabilityTestController {
         Hability hability = new Hability();
         hability.setId(1);
         hability.setLabel("Educação");
+        hability.setValue("Educação");
+        hability.setImg("opapoapopao");
 
         Mockito.when(habilityRepository.findById(1)).thenReturn(Optional.of(hability));
         this.mockMvc.perform(
