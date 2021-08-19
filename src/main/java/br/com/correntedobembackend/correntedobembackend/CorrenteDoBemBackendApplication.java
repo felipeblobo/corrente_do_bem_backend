@@ -17,22 +17,4 @@ public class CorrenteDoBemBackendApplication {
 		SpringApplication.run(CorrenteDoBemBackendApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/").allowedOrigins("http://localhost:3000");
-			}
-		};
-	}
-
-
-	@Bean
-	public PasswordEncoder getPasswordEnconder() {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
-
-
 }
