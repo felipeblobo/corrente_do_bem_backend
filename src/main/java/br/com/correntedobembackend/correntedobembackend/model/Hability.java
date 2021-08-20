@@ -15,10 +15,5 @@ public class Hability {
     private String value;
     private String img;
 
-    public Hability(int id, String label, String value, String img) {
-        this.id = id;
-        this.label = label;
-        this.value = value;
-        this.img = img;
-    }
+
 }

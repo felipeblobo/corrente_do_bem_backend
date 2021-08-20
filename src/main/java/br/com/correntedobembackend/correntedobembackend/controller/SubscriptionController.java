@@ -31,9 +31,10 @@ public class SubscriptionController {
             @RequestParam(value = "user_id", required = false) Integer user_id,
             @RequestParam(value = "project_id", required = false) Integer project_id,
             @RequestParam(value = "institution_id", required = false) Integer institution_id,
-            @RequestParam(value = "status", required = false) String status
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "q", required = false) String q
     ){
-        return customRepository.find(user_id, project_id,institution_id,status);
+        return customRepository.find(user_id, project_id,institution_id,status,q);
     }
 
     @GetMapping(path = {"/{id}"})
