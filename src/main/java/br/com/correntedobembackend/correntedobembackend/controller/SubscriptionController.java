@@ -64,8 +64,8 @@ public class SubscriptionController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addSubscription(@RequestBody Subscription subscription) {
-        repository.save(subscription);
+    public Subscription addSubscription(@RequestBody Subscription subscription) {
+        return repository.save(subscription);
     }
 
 

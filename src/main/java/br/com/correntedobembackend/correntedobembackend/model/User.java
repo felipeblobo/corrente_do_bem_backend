@@ -30,7 +30,7 @@ public class User {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private Address address;
 
