@@ -3,7 +3,7 @@ package br.com.correntedobembackend.correntedobembackend.test.controller;
 
 import br.com.correntedobembackend.correntedobembackend.security.AuthorizationFilter;
 import org.apache.tomcat.util.http.parser.Authorization;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;

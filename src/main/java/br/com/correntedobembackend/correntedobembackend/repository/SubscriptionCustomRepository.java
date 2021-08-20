@@ -17,7 +17,7 @@ public class SubscriptionCustomRepository {
         this.em = em;
     }
 
-    public List<Subscription> find(Integer user_id, Integer project_id, Integer institution_id, String status){
+    public List<Subscription> find(Integer user_id, Integer project_id, Integer institution_id, String status, String q){
 
         String query = "Select S from Subscription as S ";
         String condition = "where ";
@@ -42,6 +42,11 @@ public class SubscriptionCustomRepository {
             condition = " and ";
         }
 
+        if(q != null){
+            query += condition + "CONCAT(S.user.name, S.user.email, S.user.address.city) LIKE CONCAT('%',:q,'%')";
+            condition = " and ";
+        }
+
         var implementedQuery = em.createQuery(query, Subscription.class);
 
         if(user_id != null){
@@ -58,6 +63,10 @@ public class SubscriptionCustomRepository {
 
         if(status != null){
             implementedQuery.setParameter("status", status);
+        }
+
+        if(q != null){
+            implementedQuery.setParameter("q",q);
         }
 
         return implementedQuery.getResultList()
