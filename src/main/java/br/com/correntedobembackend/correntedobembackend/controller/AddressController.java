@@ -24,8 +24,8 @@ public class AddressController {
     }
 
     @GetMapping(path = {"/{id}"})
-    public Address getById (@PathVariable Integer id) {
-        Optional<Address> address = (Optional<Address>)repository.findById(id);
+    public Address getById(@PathVariable Integer id) {
+        Optional<Address> address = repository.findById(id);
 
         if(address.isPresent()){
             return address.get();

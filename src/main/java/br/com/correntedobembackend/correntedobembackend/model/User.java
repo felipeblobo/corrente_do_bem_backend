@@ -2,11 +2,14 @@ package br.com.correntedobembackend.correntedobembackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -26,40 +29,56 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    public User(){
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "institution_id")
+    private Institution institution;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @ManyToMany
+    @JoinTable(name = "user_cause",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cause_id"))
+    private List<Cause> causes;
+
+    @ManyToMany
+    @JoinTable(name = "user_hability",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "hability_id"))
+    private List<Hability> habilities;
+
+
+    public User() {
     }
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == user.id && type == user.type && name.equals(user.name)
+                && cpf.equals(user.cpf) && Objects.equals(birth_date, user.birth_date)
+                && Objects.equals(phone, user.phone) && email.equals(user.email)
+                && Objects.equals(password, user.password);
     }
-//
-//    public User(int id) {
-//        this.id = id;
-//    }
-//
-//    public User(int id, int type, String name, String img, String cpf) {
-//        this.id = id;
-//        this.type = type;
-//        this.name = name;
-//        this.img = img;
-//        this.cpf = cpf;
-//    }
 
-    public User(int id, int type, String name, String img, String cpf, String phone, String email, String password) {
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, name, cpf, birth_date, phone, email, password);
+    }
+
+    public User(int id, int type, String name, String img, String cpf, Date birth_date, String phone, String email, String password) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.img = img;
         this.cpf = cpf;
+        this.birth_date = birth_date;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.institution = institution;
-        this.address = address;
-        this.causes = causes;
-        this.habilities = habilities;
     }
 
     public int getId() {
@@ -165,26 +184,4 @@ public class User {
     public void setHabilities(List<Hability> habilities) {
         this.habilities = habilities;
     }
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "institution_id")
-    private Institution institution;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @ManyToMany
-    @JoinTable(name = "user_cause",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "cause_id"))
-    private List<Cause> causes;
-
-    @ManyToMany
-    @JoinTable(name = "user_hability",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "hability_id"))
-    private List<Hability> habilities;
-
-
 }

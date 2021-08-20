@@ -3,21 +3,20 @@ package br.com.correntedobembackend.correntedobembackend.service;
 import br.com.correntedobembackend.correntedobembackend.data.UserDetailsData;
 import br.com.correntedobembackend.correntedobembackend.model.User;
 import br.com.correntedobembackend.correntedobembackend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class ApplicationUserDetailsService implements UserDetailsService {
 
-    private final UserRepository repository;
-
-    public ApplicationUserDetailsService(UserRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {

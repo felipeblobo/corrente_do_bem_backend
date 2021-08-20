@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class SubscriptionController {
 
     @Autowired
     SubscriptionRepository repository;
+
     @Autowired
     SubscriptionCustomRepository customRepository;
 
@@ -63,10 +65,9 @@ public class SubscriptionController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addSubscription(@RequestBody Subscription subscription) {
-        repository.save(subscription);
+    public Subscription addSubscription(@RequestBody Subscription subscription) {
+        return repository.save(subscription);
     }
-
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = {"/{id}"})

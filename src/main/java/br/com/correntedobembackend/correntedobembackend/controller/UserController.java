@@ -25,7 +25,8 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-    private final PasswordEncoder encoder;
+    @Autowired
+    private PasswordEncoder encoder;
 
     public UserController(PasswordEncoder encoder) {
         this.encoder = encoder;
@@ -33,39 +34,24 @@ public class UserController {
 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<User> listUsers(){
-        return (List<User>) repository.findAll();
+    public ArrayList<User> list() {
+        ArrayList<User> all = (ArrayList<User>) repository.findAll();
+        return all;
     }
 
-//    public ArrayList<User> list() {
-//        ArrayList<User> all =(ArrayList<User>) repository.findAll();
-//        return all;
-//    }
-
     @GetMapping(path = {"/{id}"})
-    public User getById (@PathVariable Integer id) {
-        Optional<User> user = (Optional<User>)repository.findById(id);
+    public User getById(@PathVariable Integer id) {
+        Optional<User> user = (Optional<User>) repository.findById(id);
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
     }
 
-//    @GetMapping(path = {"/{email}"})
-//    public User getByEmail (@RequestParam String email) {
-//        Optional<User> user = (Optional<User>)repository.findByEmail(email);
-//
-//        if(user.isPresent()){
-//            return user.get();
-//        } else {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-//        }
-//    }
-
-        @RequestMapping(value = "byEmail/{email}", method = RequestMethod.GET)
-    public User getByEmail (@PathVariable("email") String email) {
+    @GetMapping(path = {"/{email}"})
+    public User getByEmail (@RequestParam String email) {
         Optional<User> user = (Optional<User>)repository.findByEmail(email);
 
         if(user.isPresent()){
@@ -75,13 +61,14 @@ public class UserController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PatchMapping(path = {"/{id}"})
     public User update(@RequestBody User user, @PathVariable int id){
         Optional<User> userToUpdate = repository.findById(id);
+        User oldUser = repository.findById(id).get();
 
         if(userToUpdate.isPresent()){
             user.setId(id);
+            user.setPassword(oldUser.getPassword());
             return repository.save(user);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
@@ -90,14 +77,17 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {
 
-        if(repository.findByEmail(user.getEmail()).isPresent()){
+        if (repository.findByEmail(user.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is already being used.");
-        }
+        } else {
 
-        user.setPassword(encoder.encode(user.getPassword()));
-        repository.save(user);
+            user.setType(1);
+            user.setPassword(encoder.encode(user.getPassword()));
+            repository.save(user);
+            return user;
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

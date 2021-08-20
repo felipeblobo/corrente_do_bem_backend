@@ -29,12 +29,4 @@ public class CorrenteDoBemBackendApplication {
 		};
 	}
 
-
-	@Bean
-	public PasswordEncoder getPasswordEnconder() {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
-
-
 }
