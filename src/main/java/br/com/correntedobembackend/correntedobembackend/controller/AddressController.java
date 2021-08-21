@@ -49,8 +49,9 @@ public class AddressController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addAddress(@RequestBody Address address) {
-        repository.save(address);
+    public Address addAddress(@RequestBody Address address) {
+
+        return repository.save(address);
     }
 
 

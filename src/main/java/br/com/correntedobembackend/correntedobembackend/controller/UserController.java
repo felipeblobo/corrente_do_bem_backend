@@ -82,7 +82,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is already being used.");
         }
 
-        user.setType(1);
         user.setPassword(encoder.encode(user.getPassword()));
         repository.save(user);
     }
