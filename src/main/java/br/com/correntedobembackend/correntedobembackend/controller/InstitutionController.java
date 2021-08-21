@@ -51,8 +51,8 @@ public class InstitutionController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addInstitution(@RequestBody Institution institution) {
-        repository.save(institution);
+    public Institution addInstitution(@RequestBody Institution institution) {
+        return repository.save(institution);
     }
 
 

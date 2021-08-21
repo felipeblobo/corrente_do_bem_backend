@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, NO_AUTH_LIST).permitAll()
-                .antMatchers(HttpMethod.POST, "/user", "/institution").permitAll()
+                .antMatchers(HttpMethod.POST, "/user", "/institution", "/address").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager()))
