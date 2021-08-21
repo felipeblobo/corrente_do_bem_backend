@@ -24,6 +24,10 @@ public class Institution {
     private String instagram;
     private String bio;
 
+    public Institution() {
+
+    }
+
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
@@ -33,10 +37,6 @@ public class Institution {
             joinColumns = @JoinColumn(name = "institution_id"),
             inverseJoinColumns = @JoinColumn(name = "cause_id"))
     private List<Cause> causes;
-
-    public Institution() {
-
-    }
 
     public Institution(int id, String name, String img, String email,
                        String summary, String cnpj, String phone, String site,
