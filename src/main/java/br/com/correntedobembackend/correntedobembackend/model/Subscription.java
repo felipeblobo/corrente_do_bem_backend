@@ -22,4 +22,5 @@ public class Subscription {
 
     private Date date;
     private String status;
+
 }
