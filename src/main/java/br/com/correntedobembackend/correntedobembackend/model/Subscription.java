@@ -6,18 +6,17 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
+@Entity(name = "Subscription")
 @Table(name = "subscription")
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "project_id")
     private Project project;
 

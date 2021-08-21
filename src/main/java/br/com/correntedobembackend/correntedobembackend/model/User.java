@@ -1,5 +1,7 @@
 package br.com.correntedobembackend.correntedobembackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,13 +21,16 @@ public class User {
     private String cpf;
     private Date birth_date;
     private String phone;
+    @Column(unique = true)
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -40,11 +45,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "hability_id"))
     private List<Hability> habilities;
-
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Subscription> subscriptions;
-
 
 
 }

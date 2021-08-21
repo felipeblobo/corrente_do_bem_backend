@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "Project")
 @Table(name = "project")
 public class Project {
     @Id
@@ -20,7 +20,7 @@ public class Project {
     private String description;
     private int popularity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
