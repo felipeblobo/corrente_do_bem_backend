@@ -18,8 +18,22 @@ public class ProjectCustomRepository {
     }
 
     public List<Project> find(Integer status, String q, Integer institution_id, String local_type, Integer cause_id, Integer hability_id){
+        String query = "Select P from Project as P ";
+        
+        if(cause_id == null && hability_id == null) {
+            query = "Select P from Project as P ";
+        }
+        if(cause_id == null && hability_id != null) {
+            query = "Select P from Project as P JOIN FETCH P.habilities H ";
+        }
+        if(cause_id != null && hability_id == null) {
+            query = "Select P from Project as P JOIN FETCH P.causes C ";
+        }
 
-        String query = "Select P from Project as P JOIN FETCH P.causes C JOIN FETCH P.habilities H ";
+        if(cause_id != null && hability_id != null) {
+            query = "Select P from Project as P JOIN FETCH P.causes C JOIN FETCH P.habilities H ";
+        }
+
         String condition = "where ";
 
         if(status != null){
