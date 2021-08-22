@@ -1,7 +1,6 @@
 package br.com.correntedobembackend.correntedobembackend.repository;
 
 import br.com.correntedobembackend.correntedobembackend.model.Project;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,9 +17,9 @@ public class ProjectCustomRepository {
         this.em = em;
     }
 
-    public List<Project> find(Integer status, String q, Integer institution_id, String local_type){
+    public List<Project> find(Integer status, String q, Integer institution_id, String local_type, Integer cause_id, Integer hability_id){
 
-        String query = "Select P from Project as P ";
+        String query = "Select P from Project as P JOIN FETCH P.causes C JOIN FETCH P.habilities H ";
         String condition = "where ";
 
         if(status != null){
@@ -43,6 +42,21 @@ public class ProjectCustomRepository {
             condition = " and ";
         }
 
+        if(cause_id != null){
+            query += condition + "C.id = :cause_id";
+            condition = " and ";
+        }
+
+        if(hability_id != null){
+            query += condition + "H.id = :hability_id";
+            condition = " and ";
+        }
+
+        if(institution_id != null){
+            query += condition + "P.institution.id = :institution_id";
+            condition = " and ";
+        }
+
         var implementedQuery = em.createQuery(query, Project.class);
 
         if(status != null){
@@ -59,6 +73,14 @@ public class ProjectCustomRepository {
 
         if(local_type != null){
             implementedQuery.setParameter("local_type",local_type);
+        }
+
+        if(cause_id != null){
+            implementedQuery.setParameter("cause_id", cause_id);
+        }
+
+        if(hability_id != null){
+            implementedQuery.setParameter("hability_id", hability_id);
         }
 
         return implementedQuery.getResultList()

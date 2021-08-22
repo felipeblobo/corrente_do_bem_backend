@@ -1,9 +1,13 @@
 package br.com.correntedobembackend.correntedobembackend.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Data
 @Entity(name = "Project")
@@ -28,20 +32,22 @@ public class Project {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "project_cause",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "cause_id"))
-    private List<Cause> causes;
+    private Set<Cause> causes = new HashSet<Cause>();
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "project_hability",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "hability_id"))
-    private List<Hability> habilities;
+    private Set<Hability> habilities = new HashSet<Hability>();
 
     public Project(int id, int status, String title, String img, String local_type, String description, int popularity,
-                   Institution institution, List<Cause> causes, List<Hability> habilities) {
+                   Institution institution, Set<Cause> causes, Set<Hability> habilities) {
         this.id = id;
         this.status = status;
         this.title = title;
@@ -121,19 +127,19 @@ public class Project {
         this.institution = institution;
     }
 
-    public List<Cause> getCauses() {
+    public Set<Cause> getCauses() {
         return causes;
     }
 
-    public void setCauses(List<Cause> causes) {
+    public void setCauses(Set<Cause> causes) {
         this.causes = causes;
     }
 
-    public List<Hability> getHabilities() {
+    public Set<Hability> getHabilities() {
         return habilities;
     }
 
-    public void setHabilities(List<Hability> habilities) {
+    public void setHabilities(Set<Hability> habilities) {
         this.habilities = habilities;
     }
 }
